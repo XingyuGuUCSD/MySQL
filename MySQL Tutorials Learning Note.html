@@ -1,0 +1,232 @@
+<!--stop at-->
+https://www.tutorialspoint.com/mysql/mysql-sql-injection.htm
+
+<!--problem:
+https://www.tutorialspoint.com/mysql/mysql-where-clause.htm
+while($row = mysql_fetch_array($retval, MYSQL_ASSOC))
+https://www.tutorialspoint.com/mysql/mysql-using-joins.htm
+left join
+https://www.tutorialspoint.com/mysql/mysql-transactions.htm
+TYPE=InnoDB
+https://www.tutorialspoint.com/mysql/mysql-clone-tables.htm
+MySQL Clone Tables
+https://www.tutorialspoint.com/mysql/mysql-using-sequences.htm
+Using MySQL Sequences
+-->
+
+<!-- MySQL Connection 
+https://www.tutorialspoint.com/mysql/mysql-connection.htm
+-->
+<html>
+<head>
+<title>Connecting MySQL Server</title>
+</head>
+<body>
+<?php
+   $dbhost = 'localhost:3306';<!-- this is default value-->
+   $dbuser = 'guest';
+   $dbpass = 'guest123';
+   $conn = mysql_connect($dbhost, $dbuser, $dbpass);
+   if(! $conn )
+   {
+     die('Could not connect: ' . mysql_error());
+   }
+   echo 'Connected successfully';
+   mysql_close($conn);
+?>
+</body>
+</html>
+
+<!-- Create Database using mysqladmin:
+https://www.tutorialspoint.com/mysql/mysql-create-database.htm
+-->
+<html>
+<head>
+<title>Creating MySQL Database</title>
+</head>
+<body>
+<?php
+$dbhost = 'localhost:3036';
+$dbuser = 'root';
+$dbpass = 'rootpassword';
+$conn = mysql_connect($dbhost, $dbuser, $dbpass);
+if(! $conn )
+{
+  die('Could not connect: ' . mysql_error());
+}
+echo 'Connected successfully<br />';
+$sql = 'CREATE DATABASE TUTORIALS';
+$retval = mysql_query( $sql, $conn );
+if(! $retval )
+{
+  die('Could not create database: ' . mysql_error());
+}
+echo "Database TUTORIALS created successfully\n";
+mysql_close($conn);
+?>
+</body>
+</html>
+
+<!--use database-->
+use database_name;
+show tables;<!--show the tables in the database_name-->
+decribe table;
+
+<!--Deleting MySQL Database -->
+<html>
+<head>
+<title>Deleting MySQL Database</title>
+</head>
+<body>
+<?php
+$dbhost = 'localhost:3036';
+$dbuser = 'root';
+$dbpass = '123456';
+$conn = mysql_connect($dbhost, $dbuser, $dbpass);
+if(! $conn )
+{
+  die('Could not connect: ' . mysql_error());
+}
+echo 'Connected successfully<br />';
+$sql = 'DROP DATABASE TUTORIALS';
+$retval = mysql_query( $sql, $conn );
+if(! $retval )
+{
+  die('Could not delete database: ' . mysql_error());
+}
+echo "Database TUTORIALS deleted successfully\n";
+mysql_close($conn);
+?>
+</body>
+</html>
+
+<!--Select database-->
+<html>
+<head>
+<title>Selecting MySQL Database</title>
+</head>
+<body>
+<?php
+$dbhost = 'localhost:3036';
+$dbuser = 'guest';
+$dbpass = 'guest123';
+$conn = mysql_connect($dbhost, $dbuser, $dbpass);
+if(! $conn )
+{
+  die('Could not connect: ' . mysql_error());
+}
+echo 'Connected successfully';
+mysql_select_db( 'TUTORIALS' );
+mysql_close($conn);
+?>
+</body>
+</html>
+
+<!--create table-->
+<html>
+<head>
+<title>Creating MySQL Tables</title>
+</head>
+<body>
+<?php
+$dbhost = 'localhost:3036';
+$dbuser = 'root';
+$dbpass = 'rootpassword';
+$conn = mysql_connect($dbhost, $dbuser, $dbpass);
+if(! $conn )
+{
+  die('Could not connect: ' . mysql_error());
+}
+echo 'Connected successfully<br />';
+$sql = "CREATE TABLE tutorials_tbl( ".
+       "tutorial_id INT NOT NULL AUTO_INCREMENT, ".
+       "tutorial_title VARCHAR(100) NOT NULL, ".
+       "tutorial_author VARCHAR(40) NOT NULL, ".
+       "submission_date DATE, ".
+       "PRIMARY KEY ( tutorial_id )); ";
+mysql_select_db( 'TUTORIALS' );
+$retval = mysql_query( $sql, $conn );
+if(! $retval )
+{
+  die('Could not create table: ' . mysql_error());
+}
+echo "Table created successfully\n";
+mysql_close($conn);
+?>
+</body>
+</html>
+
+<!--mysql-where-clause
+https://www.tutorialspoint.com/mysql/mysql-where-clause.htm-->
+<?php
+$dbhost = 'localhost:3036';
+$dbuser = 'root';
+$dbpass = 'rootpassword';
+$conn = mysql_connect($dbhost, $dbuser, $dbpass);
+if(! $conn )
+{
+  die('Could not connect: ' . mysql_error());
+}
+$sql = 'SELECT tutorial_id, tutorial_title, 
+               tutorial_author, submission_date
+        FROM tutorials_tbl
+        WHERE tutorial_author="Sanjay"';
+
+mysql_select_db('TUTORIALS');
+$retval = mysql_query( $sql, $conn );
+if(! $retval )
+{
+  die('Could not get data: ' . mysql_error());
+}
+while($row = mysql_fetch_array($retval, MYSQL_ASSOC))
+{
+    echo "Tutorial ID :{$row['tutorial_id']}  <br> ".
+         "Title: {$row['tutorial_title']} <br> ".
+         "Author: {$row['tutorial_author']} <br> ".
+         "Submission Date : {$row['submission_date']} <br> ".
+         "--------------------------------<br>";
+} 
+echo "Fetched data successfully\n";
+mysql_close($conn);
+?>
+
+<!--mysql join-->
+mysql> SELECT a.tutorial_id, a.tutorial_author, b.tutorial_count
+    -> FROM tutorials_tbl a, tcount_tbl b
+    -> WHERE a.tutorial_author = b.tutorial_author;
++-------------+-----------------+----------------+
+| tutorial_id | tutorial_author | tutorial_count |
++-------------+-----------------+----------------+
+|           1 | John Poul       |              1 |
+|           3 | Sanjay          |              1 |
++-------------+-----------------+----------------+
+2 rows in set (0.01 sec)
+
+<!--Regexps-->
+<!--Query to find all the names starting with 'st'-->
+mysql> SELECT name FROM person_tbl WHERE name REGEXP '^st';
+<!--Query to find all the names ending with 'ok'-->
+mysql> SELECT name FROM person_tbl WHERE name REGEXP 'ok$';
+<!--Query to find all the names, which contain 'mar'-->
+mysql> SELECT name FROM person_tbl WHERE name REGEXP 'mar';
+<!--Query to find all the names starting with a vowel and ending with 'ok'-->
+mysql> SELECT name FROM person_tbl WHERE name REGEXP '^[aeiou]|ok$';
+
+<!--MySQL Transactions-->
+<!--Properties of Transactions:(ACID)-->
+Atomicity: ensures that all operations within the work unit are completed successfully; otherwise, the transaction is aborted at the point of failure and previous operations are rolled back to their former state.
+Consistency: ensures that the database properly changes states upon a successfully committed transaction.
+Isolation: enables transactions to operate independently on and transparent to each other.
+Durability: ensures that the result or effect of a committed transaction persists in case of a system failure.
+<!--FORMAT-->
+In MySQL, transactions begin with the statement BEGIN WORK and end with either a COMMIT or a ROLLBACK statement. The SQL commands between the beginning and ending statements form the bulk of the transaction.
+
+<!--MySQL Index-->
+Practically, indexes are also type of tables, which keep primary key or index field and a pointer to each record into the actual table.
+
+The users cannot see the indexes, they are just used to speed up queries and will be used by Database Search Engine to locate records very fast.
+
+INSERT and UPDATE statements take more time on tables having indexes where as SELECT statements become fast on those tables. The reason is that while doing insert or update, database need to insert or update index values as well.
+
+
+
