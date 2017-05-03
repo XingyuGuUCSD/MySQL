@@ -1,2 +1,2 @@
 # MySQL
-This respority is for MySQL tutorial and Udemy projext
+This respority is for MySQL tutorial and Udemy project
