@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <title>Opt In</title>
+        <link href="style.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <div class="backgrounds">
+            <div class="main-content">
+                <h1>Sign up</h1>
+                <form action="receiver.php" method="POST">
+                    <input type="hidden" name="formID" value="OptIn"/>
+                    <input type="hidden" name="successredirecturl" value="Success.html"/>
+                    <input type="hidden" name="rejectredirecturl" value="Fail.html"/>
+                    <p>First Name:<input type="text" name="FNAME" maxlength="100" required></p>
+                    <p>Last Name:<input type="text" name="LNAME" maxlength="100" required></p>
+                    <p>Email:<input type="text" name="EMAIL" maxlength="100" required></p>
+                    <input type="submit" class="button">
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
