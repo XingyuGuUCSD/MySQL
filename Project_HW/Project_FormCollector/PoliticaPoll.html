@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<HTML>
+  <HEAD>
+    <TITLE>Political Poll</TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <link href="style.css" rel="stylesheet" type="text/css">  
+<script type="text/javascript"> 
+function validateForm(){
+  return true;
+};             
+</script>
+  </HEAD> 
+  <BODY>
+      <div class="backgroundimage" >
+      <div id="main-content" class="main-content" >
+    <h1>Politics</h1>
+      <form action="receiver.php" method = "POST" onsubmit='return validateForm()' />
+        <input type="hidden" name="formID" value="PoliticalPoll" />
+        <input type="hidden" name="successredirecturl" value="Success.html">
+        <input type="hidden" name="rejectredirecturl" value="Fail.html">
+        <p>Gender: 
+          <select name="GENDER" required>
+            <option value="">Please Select</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other" >Other</option>
+          </select>
+        </p>
+        <p>Age:  <input type="number" name="AGE" min="0" max="110"  required/></p>
+        <p>How often do you vote:  
+          <select name="VOTE_FREQ" required>
+            <option value="">Please Select</option>
+            <option value="Always">Always</option>
+            <option value="Sometimes">Sometimes</option>
+            <option value="Never" >Never</option>
+          </select>
+        </p>
+        <p>Political Party:  
+          <select name="PARTY" required>
+            <option value="">Please Select</option>
+            <option value="Republican">Republican</option>
+            <option value="Democrat">Democrat</option>
+            <option value="Libertarian">Libertarian</option>
+            <option value="Not Listed">Not Listed</option>
+            <option value="Not Affiliated">Not Affiliated</option>            
+          </select>
+        </p>
+        <p>Who will you vote for: 
+          <select name="CANDIDATE" required>
+            <option value="">Please Select</option>
+            <option value="Bernie">Bernie</option>
+            <option value="Hillary">Hillary</option>
+            <option value="Trump">Trump</option>
+            <option value="Cruz">Cruz</option>
+            <option value="Rubio">Rubio</option>            
+          </select>
+        </p>        
+        <br>
+        <input type="submit" class='button'>        
+      </form>
+    </div>
+  </div>
+  </BODY>
+</HTML>
+
